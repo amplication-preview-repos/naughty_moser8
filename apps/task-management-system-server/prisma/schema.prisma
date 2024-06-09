@@ -1,0 +1,39 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model TaskJob {
+  createdAt         DateTime  @default(now())
+  cronExpression    String?
+  description       String?
+  id                String    @id @default(cuid())
+  isActive          Boolean?
+  isOneTime         Boolean?
+  lastExecutionTime DateTime?
+  name              String?
+  nextExecutionTime DateTime?
+  updatedAt         DateTime  @updatedAt
+}
+
+model Permission {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  createdAt DateTime @default(now())
+  email     String?  @unique
+  firstName String?
+  id        String   @id @default(cuid())
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
